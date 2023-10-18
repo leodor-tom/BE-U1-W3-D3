@@ -1,4 +1,6 @@
-package TommasoEleodori.entities;
+package TommasoEleodori.entities.dao;
+
+import TommasoEleodori.entities.Evento;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;

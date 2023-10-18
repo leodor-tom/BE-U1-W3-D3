@@ -1,10 +1,10 @@
 package TommasoEleodori.entities;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import java.util.Date;
+import TommasoEleodori.entities.enums.Tipologia;
+
+import javax.persistence.*;
+import java.time.LocalDate;
+import java.util.Set;
 
 @Entity
 @Table(name = " eventi")
@@ -13,19 +13,34 @@ public class Evento {
     @GeneratedValue
     private long id;
     private String titolo;
-    private Date dataEvento;
+    private LocalDate dataEvento;
     private String descrizione;
     private Tipologia tipoEvento;
     private long numeroMassimoPartecipanti;
 
-    public Evento(){}
+    @ManyToMany
+    @JoinTable(name = "locations_eventi",
+            joinColumns = @JoinColumn(name = "evento_id"),
+            inverseJoinColumns = @JoinColumn(name = "location_id"))
+    private Set<Location> locations;
 
-    public Evento(String titolo, Date dataEvento, String descrizione, Tipologia tipoEvento, long numeroMassimoPartecipanti) {
+    public Evento() {
+    }
+
+    public Evento(String titolo, LocalDate dataEvento, String descrizione, Tipologia tipoEvento, long numeroMassimoPartecipanti) {
         this.titolo = titolo;
         this.dataEvento = dataEvento;
         this.descrizione = descrizione;
         this.tipoEvento = tipoEvento;
         this.numeroMassimoPartecipanti = numeroMassimoPartecipanti;
+    }
+
+    public Set<Location> getLocations() {
+        return locations;
+    }
+
+    public void setLocations(Set<Location> locations) {
+        this.locations = locations;
     }
 
     public long get_id() {
@@ -40,11 +55,11 @@ public class Evento {
         this.titolo = titolo;
     }
 
-    public Date getDataEvento() {
+    public LocalDate getDataEvento() {
         return dataEvento;
     }
 
-    public void setDataEvento(Date dataEvento) {
+    public void setDataEvento(LocalDate dataEvento) {
         this.dataEvento = dataEvento;
     }
 
